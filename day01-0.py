@@ -1,22 +1,23 @@
 from itertools import cycle
 
 
-freqlist = []
-
 with open('input01-0.txt') as f:
-    for line in f:
-        freqlist.append(int(line))
+    freqlist = [int(line) for line in f]
 
 print(sum(freqlist))
 
-freqcycle = cycle(freqlist)
-freq = 0
-freqs = {freq}
+def find_repeated_freq(freqlist):
+    freqcycle = cycle(freqlist)
+    freq = 0
+    freqs = {freq}
 
-for f in freqcycle:
-    freq += f
-    if freq in freqs:
-        print(freq, len(freqlist), len(freqs))
-        break
-    else:
-        freqs.add(freq)
+    for f in freqcycle:
+        freq += f
+        if freq in freqs:
+            print(len(freqs) / len(freqlist))
+            return freq
+        else:
+            freqs.add(freq)
+
+assert find_repeated_freq([7, 7, -2, -7, -4]) == 14
+print(find_repeated_freq(freqlist))
