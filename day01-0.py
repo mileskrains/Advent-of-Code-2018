@@ -16,7 +16,7 @@ freqs = {freq}
 for f in freqcycle:
     freq += f
     if freq in freqs:
-        print(freq)
+        print(freq, len(freqlist), len(freqs))
         break
     else:
-        freqs.add(f)
+        freqs.add(freq)
