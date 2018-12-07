@@ -1,13 +1,13 @@
 with open('input05-0.txt') as f:
     polymer = f.read().strip()
 
-# polymer = 'dabAcCaCBAcaACZzcaDAZcDdCzaA'
+# polymer = ['xAAazZa', 'dabAcCaCBAcCcaDA'][0]
 
 ords = [ord(c) for c in polymer]
 size = len(ords)
 print(size)
 
-use_version_2 = False
+use_version_2 = True
 
 while True:
     if use_version_2:
@@ -36,6 +36,9 @@ while use_version_2 and pos2 < size:
         pos1 -= 1
         if pos1 < 0:
             pos1 += 1
+        elif ords[pos1] == 0:
+            while ords[pos1] == 0:
+                pos1 -= 1
     else:
         pos2 += 1
         pos1 = pos2 - 1
