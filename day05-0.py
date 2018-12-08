@@ -1,22 +1,19 @@
 import string
+from collections import Counter
 
 
 with open('input05-0.txt') as f:
     input_polymer = f.read().strip()
 
-polymer = [input_polymer, 'dabAcCaCBAcCcaDA'][1]
-
-ords = [ord(c) for c in polymer]
-print(len(ords))
+polymer = [input_polymer, 'dabAcCaCBAcCcaDA'][0]
+print(len(polymer))
 
 
-def reacted_size(ords, dropchar='*'):
+def reacted_size(polymer):
     pos2 = 1
     pos1 = 0
-
-    drop_ords = (ord(dropchar.lower()), ord(dropchar.upper()))
-    ords = [e for e in ords if e not in drop_ords]
-    size = len(ords)
+    size = len(polymer)
+    ords = [ord(c) for c in polymer]
 
     while pos2 < size:
         if abs(ords[pos2]-ords[pos1]) == 32:
@@ -37,7 +34,17 @@ def reacted_size(ords, dropchar='*'):
     return len(ords)
 
 
-print(reacted_size(ords))
+print(reacted_size(polymer))
 
-dropsizes = [(reacted_size(ords, letter), letter) for letter in string.ascii_lowercase]
+
+def polydrop(polymer, dropchar):
+    to_drop = (dropchar.lower(), dropchar.upper())
+    return ''.join([ch for ch in polymer if ch not in to_drop])
+
+
+dropsizes = [(reacted_size(polydrop(polymer, letter)), letter) for letter in string.ascii_lowercase]
 print(sorted(dropsizes))
+
+print(sorted([(v, k) for k, v in Counter(polymer.lower()).items()], reverse=True))
+
+# above finds 'f' dropped gives reacted size of 6870, which the site says is too low ... :(
