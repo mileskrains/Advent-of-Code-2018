@@ -34,6 +34,26 @@ def reacted_size(polymer):
     return len(ords)
 
 
+def reacted_size_ineff(polymer):
+    ords = [ord(c) for c in polymer]
+    size = len(ords)
+
+    while True:
+        for i in range(1, size):
+            if abs(ords[i] - ords[i-1]) == 32:
+                ords[i] = 0
+                ords[i-1] = 0
+        ords = [o for o in ords if o]
+        rsize = len(ords)
+        if rsize == size:
+            break
+        else:
+            size = rsize
+
+    return size
+
+
+
 print(reacted_size(polymer))
 
 
@@ -45,6 +65,6 @@ def polydrop(polymer, dropchar):
 dropsizes = [(reacted_size(polydrop(polymer, letter)), letter) for letter in string.ascii_lowercase]
 print(sorted(dropsizes))
 
-print(sorted([(v, k) for k, v in Counter(polymer.lower()).items()], reverse=True))
+# print(sorted([(v, k) for k, v in Counter(polymer.lower()).items()], reverse=True))
 
-# above finds 'f' dropped gives reacted size of 6870, which the site says is too low ... :(
+# reacted_size above finds 'f' dropped gives reacted size of 6870, while reacted_size_ineff finds 'f' dropped gives reacted size of 6874 ...
